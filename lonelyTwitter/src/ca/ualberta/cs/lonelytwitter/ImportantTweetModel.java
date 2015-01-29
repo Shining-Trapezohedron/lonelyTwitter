@@ -20,5 +20,11 @@ public class ImportantTweetModel extends LonelyTweetModel {
 	public Date getTimestamp() {
 		return timestamp;
 	}
+	//Any extensions need their own instance check
+	//Added this
+	@Override
+	public boolean equals(Object other) {
+		return super.equals(other) && (other instanceof ImportantTweetModel);
+	}
 
 }

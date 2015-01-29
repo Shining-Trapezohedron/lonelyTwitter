@@ -6,6 +6,7 @@ public abstract class LonelyTweetModel {
 	private String text;
 	protected Date timestamp;
 	
+	
 	public String getText() {
 		return text;
 	}
@@ -31,6 +32,7 @@ public abstract class LonelyTweetModel {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
+	
 	
 	public boolean equals(Object other) {
 		if (other == null || !(other instanceof LonelyTweetModel)) {

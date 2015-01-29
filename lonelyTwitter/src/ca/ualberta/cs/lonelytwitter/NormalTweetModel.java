@@ -17,6 +17,7 @@ public class NormalTweetModel extends LonelyTweetModel {
 		return timestamp;
 	}
 	
+	//Any extensions need their own instance check
 	@Override
 	public boolean equals(Object other) {
 		return super.equals(other) && (other instanceof NormalTweetModel);
