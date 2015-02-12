@@ -13,6 +13,7 @@ public class IntentReaderActivity extends Activity {
 	public static final int NORMAL = 1;
 	public static final int REVERSE = 2;
 	public static final int DOUBLE = 3;
+	public static final int DEFAULT = 4;
 	
 	private String text;
 	private int mode;
@@ -25,6 +26,15 @@ public class IntentReaderActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intent_reader);
+		Intent intent = getIntent();
+		text = intent.getStringExtra(TEXT_KEY);
+		mode = intent.getIntExtra(TEXT_KEY, NORMAL);
+		if (text.isEmpty()){
+			mode = DEFAULT;
+		}
+		text = transformText(text);
+		TextView view = (TextView) findViewById(R.id.intentText);
+		view.setText(text);
 	}
 	
 	public String transformText(String text) {
@@ -39,6 +49,8 @@ public class IntentReaderActivity extends Activity {
 				return new String(string);
 			case DOUBLE:
 				return text + text;
+			case DEFAULT:
+				return "Default";
 		}
 		return text;
 	}

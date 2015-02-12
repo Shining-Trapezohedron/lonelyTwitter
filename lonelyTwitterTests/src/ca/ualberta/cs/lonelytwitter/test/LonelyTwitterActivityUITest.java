@@ -1,15 +1,19 @@
 package ca.ualberta.cs.lonelytwitter.test;
 
+import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import ca.ualberta.cs.lonelytwitter.LonelyTwitterActivity;
 import ca.ualberta.cs.lonelytwitter.NormalTweetModel;
+import ca.ualberta.cs.lonelytwitter.R;
+import android.test.ViewAsserts;
 
 /*
  * generate this class with new.. JUnit Test Case
@@ -34,6 +38,38 @@ public class LonelyTwitterActivityUITest extends
 		textInput = ((EditText) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.body));
 	}
 	
+	public void testSetText() {
+		
+		instrumentation.runOnMainSync(new Runnable(){
+			@Override
+			public void run() {
+				String text = "tweet";
+				textInput.setText(text);
+				
+			}
+		});
+		instrumentation.waitForIdleSync();
+		assertEquals("correct text?", "tweet", textInput.getText().toString());
+	}
+	
+	public void isVisible(){
+		//activity.getWindow().getDecorView() 
+		//assertOffScreenAbove(View origin, View view)
+		instrumentation.runOnMainSync(new Runnable() {
+			
+			@Override
+			public void run() {
+				String text = "tweet";
+				textInput.setText(text);
+				
+			}
+		});
+		instrumentation.waitForIdleSync();
+		ViewAsserts.assertOnScreen((View) activity.getWindow().getDecorView(), (View) activity.findViewById(R.id.intentText));
+		
+		
+	}
+	
 	/*
 	 * fills in the input text field and clicks the 'save'
 	 * button for the activity under test
@@ -41,6 +77,11 @@ public class LonelyTwitterActivityUITest extends
 	private void makeTweet(String text) {
 		assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save));
 		textInput.setText(text);
+		int oldSize = ((ListView) activity.findViewById(R.id.oldTweetsList)).getCount();
 		((Button) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.save)).performClick();
+		int newSize = ((ListView) activity.findViewById(R.id.oldTweetsList)).getCount();
+		assertEquals("Added to listview?",oldSize+1,newSize);
+		
+		
 	}
 }
